@@ -6,7 +6,7 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 
-const { PAGE_ACCESS_TOKEN, VERIFY_TOKEN, GROQ_API_KEY } = process.env;
+const { PAGE_ACCESS_TOKEN, VERIFY_TOKEN, GEMINI_API_KEY } = process.env;
 
 // Simple in-memory conversation store
 const conversations = new Map();
