@@ -69,35 +69,24 @@ async function handleMessage(senderId, text) {
 
 async function getAIReply(history) {
   try {
-
+    const prompt = history.map(h => h.content).join("\n");
 
     const response = await axios.post(
-      "https://api.groq.com/openai/v1/chat/completions",
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`,
       {
-        model: "llama-3.1-8b-instant",
-        messages: [
-{
-  role: "system",
-  content: "Always reply in the same language as the most recent user message. Ignore previous conversation language."
-},
-...history
-]
-      },
-      {
-        headers: {
-          "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
-          "Content-Type": "application/json"
-        }
+        contents: [
+          {
+            parts: [{ text: prompt }]
+          }
+        ]
       }
     );
 
-    return response.data.choices[0].message.content;
+    return response.data.candidates[0].content.parts[0].text;
 
   } catch (err) {
-
-    console.error("Groq Error:", err.response?.data || err.message);
-
-    return "⚠️ Nang AI have Temporary problem.";
+    console.error("Gemini Error:", err.response?.data || err.message);
+    return "⚠️ Nang AI Have temporary problem bro.";
   }
 }
 
