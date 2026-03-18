@@ -99,9 +99,12 @@ async function sendText(recipientId, text) {
 async function sendAPI(recipientId, payload) {
   try {
     await axios.post(
-      `https://graph.facebook.com/v18.0/me/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`
-      { recipient: { id: recipientId }, ...payload }
-    );
+  `https://graph.facebook.com/v18.0/me/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`,
+  {
+    recipient: { id: recipientId },
+    ...payload
+  }
+);
   } catch (err) {
     console.error('Send failed:', err.response?.data?.error?.message || err.message);
   }
