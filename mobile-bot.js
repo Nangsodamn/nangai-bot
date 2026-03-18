@@ -72,21 +72,21 @@ async function getAIReply(history) {
     const prompt = history.map(h => h.content).join("\n");
 
     const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`,
+  `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+  {
+    contents: [
       {
-        contents: [
-          {
-            parts: [{ text: prompt }]
-          }
-        ]
+        parts: [{ text: prompt }]
       }
-    );
+    ]
+  }
+);
 
     return response.data.candidates[0].content.parts[0].text;
 
   } catch (err) {
-    console.error("Gemini Error:", err.response?.data || err.message);
-    return "⚠️ Nang AI Have temporary problem bro.";
+  console.error("Gemini FULL Error:", err.response?.data || err.message);
+  return "⚠ Nang AI Have temporary problem bro.";
   }
 }
 
