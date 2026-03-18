@@ -85,7 +85,11 @@ async function getAIReply(history) {
     return response.data.candidates[0].content.parts[0].text;
 
   } catch (err) {
-  console.error("Gemini FULL Error:", err.response?.data || err.message);
+  console.error("❌ GEMINI ERROR FULL:");
+  console.error("Status:", err.response?.status);
+  console.error("Data:", JSON.stringify(err.response?.data, null, 2));
+  console.error("Message:", err.message);
+
   return "⚠ Nang AI Have temporary problem bro.";
   }
 }
