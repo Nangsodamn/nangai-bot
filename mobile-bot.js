@@ -82,7 +82,15 @@ async function getAIReply(history) {
   }
 );
 
-    return response.data.candidates[0].content.parts[0].text;
+    const reply =
+  response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+if (!reply) {
+  console.error("❌ Empty Gemini response:", response.data);
+  return "⚠ AI returned empty response.";
+}
+
+return reply;
 
   } catch (err) {
   console.error("❌ GEMINI ERROR FULL:");
